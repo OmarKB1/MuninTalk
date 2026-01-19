@@ -1,0 +1,323 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Munintalk Pro</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-sidebar: #23272a;
+            --bg-main: #2c2f33;
+            --header-blue: #7289da;
+            --text-white: #ffffff;
+            --settings-bg: #202225;
+            --input-dark: #18191c;
+            --msg-sent: #4f545c;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            background-color: var(--bg-main);
+            color: white;
+            overflow: hidden;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 300px;
+            background-color: var(--bg-sidebar);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            border-right: 1px solid rgba(0,0,0,0.2);
+        }
+
+        .profile-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .avatar-circle {
+            width: 70px;
+            height: 70px;
+            background-color: var(--header-blue);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            margin-bottom: 10px;
+            background: white;
+            color: black;
+        }
+
+        .btn-add {
+            background-color: var(--header-blue);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-date {
+            text-align: center;
+            font-size: 13px;
+            padding: 5px;
+            background: rgba(0,0,0,0.1);
+            opacity: 0.7;
+        }
+
+        .contact-header {
+            background-color: var(--header-blue);
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* CHAT BEREICH */
+        #chat-window {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .message {
+            max-width: 70%;
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 14px;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+
+        .sent {
+            align-self: flex-end;
+            background-color: var(--msg-sent);
+            border-bottom-right-radius: 2px;
+        }
+
+        /* INPUT UNTEN */
+        .bottom-bar {
+            padding: 20px;
+            display: flex;
+            gap: 10px;
+            background: var(--bg-main);
+        }
+
+        .msg-input {
+            flex: 1;
+            padding: 12px;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+        }
+
+        /* SETTINGS MODAL */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .settings-card {
+            width: 400px;
+            background: var(--settings-bg);
+            padding: 30px;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .custom-logo {
+            width: 100px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        .setting-group {
+            width: 100%;
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .setting-input {
+            width: 100%;
+            background: var(--input-dark);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 12px;
+            border-radius: 5px;
+            color: white;
+            outline: none;
+        }
+
+        .save-btn {
+            width: 100%;
+            background: var(--header-blue);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="profile-area">
+            <div class="avatar-circle" id="display-avatar">O</div>
+            <div id="display-username" style="font-weight: bold;">Omar</div>
+            <div style="font-size: 12px; opacity: 0.5;">#1234</div>
+        </div>
+        <div class="sidebar-user-list">
+            <p style="font-size: 12px; opacity: 0.3;">FREUND HINZUFÜGEN</p>
+            <input type="text" id="add-name" class="sidebar-input" placeholder="Name">
+            <input type="text" id="add-code" class="sidebar-input" placeholder="Code (4 Ziffern)">
+            <button class="btn-add" onclick="addNewFriend()">Hinzufügen</button>
+            <p id="add-status" style="font-size: 12px; margin-top: 10px; display: none;"></p>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="top-date">Montag, 19. Januar 2026</div>
+        <div class="contact-header">
+            <span>Wähle einen Kontakt</span>
+            <button class="icon-btn" style="background:none; border:none; color:white; cursor:pointer;" onclick="toggleModal(true)">
+                <i class="fas fa-cog" style="font-size: 20px;"></i>
+            </button>
+        </div>
+
+        <div id="chat-window">
+        </div>
+
+        <div class="bottom-bar">
+            <input type="text" id="message-input" class="msg-input" placeholder="Schreibe eine Nachricht..." onkeypress="handleKeyPress(event)">
+            <button class="btn-add" onclick="sendMessage()">Senden</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal">
+        <div class="settings-card">
+            <img src="munintalk.png" alt="Logo" class="custom-logo" onerror="this.style.display='none'">
+
+            <h2 style="margin: 0 0 20px 0;">Einstellungen</h2>
+
+            <div class="setting-group">
+                <label style="font-size: 12px; opacity: 0.6;">BENUTZERNAME</label>
+                <input type="text" id="edit-username" class="setting-input" value="Omar">
+            </div>
+
+            <div class="setting-group">
+                <label style="font-size: 12px; opacity: 0.6;">PASSWORT</label>
+                <div style="position: relative; display: flex; align-items: center;">
+                    <input type="password" id="edit-password" class="setting-input" value="passwort123">
+                    <i class="fas fa-eye" style="position: absolute; right: 10px; cursor: pointer; color: #b9bbbe;" onclick="togglePass()"></i>
+                </div>
+            </div>
+
+            <button class="save-btn" onclick="saveSettings()">Speichern</button>
+            <button style="background:none; border:none; color:white; margin-top:10px; cursor:pointer;" onclick="toggleModal(false)">Abbrechen</button>
+        </div>
+    </div>
+
+    <script>
+        // Nachrichten senden
+        function sendMessage() {
+            const input = document.getElementById('message-input');
+            const chatWindow = document.getElementById('chat-window');
+
+            if (input.value.trim() !== "") {
+                const msgDiv = document.createElement('div');
+                msgDiv.classList.add('message', 'sent');
+                msgDiv.innerText = input.value;
+                chatWindow.appendChild(msgDiv);
+
+                input.value = "";
+                chatWindow.scrollTop = chatWindow.scrollHeight; // Auto-Scroll nach unten
+            }
+        }
+
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') sendMessage();
+        }
+
+        // Freund hinzufügen Logik
+        function addNewFriend() {
+            const name = document.getElementById('add-name').value;
+            const code = document.getElementById('add-code').value;
+            const status = document.getElementById('add-status');
+
+            status.style.display = "block";
+
+            // Beispiel-Logik: Nur wenn Name "Admin" und Code "0000" ist, wird er gefunden
+            if (name === "Admin" && code === "0000") {
+                status.innerText = "✓ Benutzer gefunden!";
+                status.style.color = "#43b581";
+            } else {
+                status.innerText = "✗ Benutzer nicht gefunden.";
+                status.style.color = "#f04747";
+            }
+
+            // Status nach 3 Sekunden ausblenden
+            setTimeout(() => { status.style.display = "none"; }, 3000);
+        }
+
+        // Modal & Einstellungen
+        function toggleModal(show) { document.getElementById('modal').style.display = show ? 'flex' : 'none'; }
+
+        function togglePass() {
+            const p = document.getElementById('edit-password');
+            p.type = p.type === "password" ? "text" : "password";
+        }
+
+        function saveSettings() {
+            const name = document.getElementById('edit-username').value;
+            document.getElementById('display-username').innerText = name;
+            document.getElementById('display-avatar').innerText = name.charAt(0).toUpperCase();
+            toggleModal(false);
+        }
+    </script>
+</body>
+</html>

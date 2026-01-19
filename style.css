@@ -1,0 +1,204 @@
+/* Grundgerüst */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    transition: background 0.5s, color 0.5s;
+}
+
+img {
+  width: 100px;
+  border-radius: 10px;
+}
+
+
+.container {
+    padding: 30px 50px;
+    border-radius: 10px;
+    width: 300px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    transition: background 0.5s, color 0.5s;
+    position: relative;
+}
+
+h2 {
+    margin-bottom: 10px;
+    font-size: 1.8em;
+}
+
+input {
+    width: 100%;
+    max-width: 280px;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: none;
+    font-size: 1em;
+    box-sizing: border-box;
+    transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+input::placeholder {
+    color: #72767d;
+}
+
+input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #7289da;
+}
+
+button {
+    width: 100%;
+    max-width: 280px;
+    padding: 12px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background 0.3s, color 0.3s;
+}
+
+/* Paragraph & Link */
+p {
+    margin-top: 20px;
+    font-size: 0.9em;
+}
+
+span {
+    color: #7289da;
+    cursor: pointer;
+}
+
+/* --- Theme Switcher --- */
+.theme-switcher {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 50px;
+    height: 26px;
+    background: #ccc;
+    border-radius: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5px;
+    box-sizing: border-box;
+    transition: background 0.3s;
+}
+
+.theme-switcher .toggle-circle {
+    width: 21px;
+    height: 21px;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    bottom: 2px;
+    left: 2px;
+    right: 2px;
+    transition: transform 0.3s, background 0.3s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.theme-switcher .icon {
+    font-size: 14px;
+    z-index: 1;
+}
+
+/* --- Dark Theme --- */
+body.dark {
+    background: #36393f;
+    color: #ffffff;
+}
+
+body.dark .container {
+    background: #2f3136;
+    color: #ffffff;
+}
+
+body.dark input {
+    background: #202225;
+    color: #dcddde;
+}
+
+body.dark input::placeholder {
+    color: #72767d;
+}
+
+body.dark button:not(.theme-switcher) {
+    background: #7289da;
+    color: #ffffff;
+}
+
+body.dark button:not(.theme-switcher):hover {
+    background: #5b6eae;
+}
+
+body.dark .theme-switcher {
+    background: #555;
+}
+
+body.dark .theme-switcher .toggle-circle {
+    transform: translateX(24px);
+}
+
+/* --- Light Theme --- */
+body.light {
+    background: #f0f0f0;
+    color: #333333;
+}
+
+body.light .container {
+    background: #ffffff;
+    color: #333333;
+}
+
+body.light input {
+    background: #e0e0e0;
+    color: #333333;
+}
+
+body.light input::placeholder {
+    color: #888888;
+}
+
+body.light button:not(.theme-switcher) {
+    background: #667eea;
+    color: #ffffff;
+}
+
+body.light button:not(.theme-switcher):hover {
+    background: #5a67d8;
+}
+
+body.light .theme-switcher {
+    background: #ccc;
+}
+
+body.light .theme-switcher .toggle-circle {
+    transform: translateX(0);
+}
+
+/* --- Animationen --- */
+.animated {
+    animation-duration: 0.6s;
+    animation-fill-mode: both;
+}
+
+@keyframes fadeIn {
+    0% {opacity: 0; transform: translateY(-20px);}
+    100% {opacity: 1; transform: translateY(0);}
+}
+
+.fadeIn {
+    animation-name: fadeIn;
+}

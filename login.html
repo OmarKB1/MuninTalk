@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark">
+    <div class="container animated fadeIn">
+        <!-- Dark/Light Mode Switcher -->
+        <div id="themeSwitcher" class="theme-switcher">
+            <span class="icon sun">☀️</span>
+            <span class="icon moon">🌙</span>
+            <div class="toggle-circle"></div>
+        </div>
+
+        <img src="munintalk.png">
+
+        <form id="loginForm">
+            <h2>Munintalk Login</h2>
+            <input type="text" id="loginUsername" placeholder="Benutzername" required>
+            <input type="password" id="loginPassword" placeholder="Passwort" required>
+            <button type="submit">Login</button>
+            <p>Noch keinen Account? <span id="toRegister">Registrieren</span></p>
+        </form>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
